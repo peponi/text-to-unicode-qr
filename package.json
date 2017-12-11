@@ -1,0 +1,25 @@
+{
+  "name": "znode-shares",
+  "version": "1.0.0",
+  "description": "a software to generate & send emails for Zcoin Masternode share requests",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run test",
+    "start:maildev": "maildev",
+    "start": "node index.js"
+  },
+  "keywords": [
+    "zcoin",
+    "masternode"
+  ],
+  "author": "pep0ni",
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "maildev": "^1.0.0-rc3"
+  },
+  "dependencies": {
+    "nodemailer": "^4.4.0",
+    "qrcode-terminal": "^0.11.0",
+    "yargs": "^10.0.3"
+  }
+}
