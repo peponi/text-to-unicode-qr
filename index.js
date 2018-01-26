@@ -80,6 +80,7 @@ qrcode.generate(yargs.account, {small: true}, function (qrcode) {
         });
 
         // setup email data with unicode symbols
+        // https://nodemailer.com/message/custom-source/
         let mailOptions = {
             from: '"Fred Foo 👻" <foo@blurdybloop.com>', // sender address
             to: 'bar@blurdybloop.com, baz@blurdybloop.com, pep0ni@protonmail.com', // list of receivers
