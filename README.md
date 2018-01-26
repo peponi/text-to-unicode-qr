@@ -1,5 +1,9 @@
 ## I try to send emails with text based qr codes
 
+![screenshot of an html email with text based QR code](./assets/screenshot.png)
+
+## Usage
+
 start ```npm run start:maildev```
 
 send a mail with an Bitcoin address as QR code
