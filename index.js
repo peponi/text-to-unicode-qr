@@ -2,25 +2,9 @@
 const nodemailer = require('nodemailer');
 const yargs = require('yargs').argv;
 const qrcode = require('qrcode-terminal');
+const quotedPrintable = require('quoted-printable')
+const utf8 = require('utf8')
 const fs = require('fs');
-
-function b64EncodeUnicode(str) {
-    // first we use encodeURIComponent to get percent-encoded UTF-8,
-    // then we convert the percent encodings into raw bytes which
-    // can be fed into btoa.
-    return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g,
-        function toSolidBytes(match, p1) {
-            return String.fromCharCode('0x' + p1);
-    }));
-}
-
-const base64 = {
-    'lineBreak': 'ECgoK',
-    'blockUp': '4paA',
-    'blockDown': '4paE',
-    'blockFull': '4paI',
-    'whitespace': 'ICAg'
-}
 
 const invert = {
     '█': ' ',
@@ -28,8 +12,6 @@ const invert = {
     '▀': '▄',
     ' ': '█'
 }
-
-
 const paddingVertical = 10
 const paddingHorizontal = paddingVertical / 2
 const paddingFiller = '█'
@@ -122,11 +104,14 @@ qrcode.generate(yargs.account, {small: true}, function (qrcode) {
             }
         });
 
+        // textQrCode = new Buffer(textQrCode).toString('base64') // base64 encode
+        textQrCode = quotedPrintable.encode(utf8.encode(textQrCode));
+
         // setup email data with unicode symbols
         // https://nodemailer.com/message/custom-source/
         let mailOptions = {
             from: '"Fred Foo 👻" <foo@blurdybloop.com>', // sender address
-            to: 'bar@blurdybloop.com, baz@blurdybloop.com, pep0ni@protonmail.com', // list of receivers
+            to: 'bar@blurdybloop.com, baz@blurdybloop.com', // list of receivers
             subject: 'Hello ✔', // Subject line
             // text: textQrCode, // plain text body
             // html: mailQrCode, // html body
@@ -141,16 +126,22 @@ Date: Fri, 26 Jan 2018 14:47:17 +0000
 MIME-Version: 1.0
 
 ----_NmP-e3af7e65a26e2087-Part_1
-Content-Type: text/html; charset=utf-8
-Content-Transfer-Encoding: base64
-
-${mailQrCode}
-----_NmP-e3af7e65a26e2087-Part_1
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: ascii
+Content-Type: text/plain;
+Content-Transfer-Encoding: quoted-printable
 
 ${textQrCode}
 ----_NmP-e3af7e65a26e2087-Part_1--`
+
+// ----_NmP-e3af7e65a26e2087-Part_1
+// Content-Type: text/html; charset=utf-8
+// Content-Transfer-Encoding: base64
+
+// ${mailQrCode}
+// ----_NmP-e3af7e65a26e2087-Part_1
+// Content-Type: text/plain; charset=utf-8
+// Content-Transfer-Encoding: ascii
+
+// ${textQrCode}
         };
 
         // send mail with defined transport object
@@ -161,10 +152,6 @@ ${textQrCode}
             console.log('Message sent: %s', info.messageId);
             // Preview only available when sending through an Ethereal account
             console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
-
-            // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@blurdybloop.com>
-            // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
         });
     });
 });
-
