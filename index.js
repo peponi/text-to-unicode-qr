@@ -1,114 +1,16 @@
-'use strict';
-const nodemailer = require('nodemailer');
-const yargs = require('yargs').argv;
-const qrcode = require('qrcode-terminal');
-const fs = require('fs');
+'use strict'
 
-function b64EncodeUnicode(str) {
-    // first we use encodeURIComponent to get percent-encoded UTF-8,
-    // then we convert the percent encodings into raw bytes which
-    // can be fed into btoa.
-    return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g,
-        function toSolidBytes(match, p1) {
-            return String.fromCharCode('0x' + p1);
-    }));
-}
-
-const base64 = {
-    'lineBreak': 'ECgoK',
-    'blockUp': '4paA',
-    'blockDown': '4paE',
-    'blockFull': '4paI',
-    'whitespace': 'ICAg'
-}
-
-const invert = {
-    '█': ' ',
-    '▄': '▀',
-    '▀': '▄',
-    ' ': '█'
-}
-
-
-const paddingVertical = 10
-const paddingHorizontal = paddingVertical / 2
-const paddingFiller = '█'
-const lineBreaker = '\n'
-
-const invertQrCode = (qrcode) => {
-    const qrCodeLineLength = qrcode.indexOf('\n')
-    let invertedQrCode = ''
-    let currentLineIndex = 0
-    let qrCodeLineCount = 0
-
-    for (var i = 0; i < qrcode.length; i++) {
-        invertedQrCode += invert[qrcode[i]]
-
-        if (currentLineIndex === qrCodeLineLength) {
-            invertedQrCode += lineBreaker
-            currentLineIndex = 0
-            qrCodeLineCount ++
-        } else {
-            currentLineIndex++
-        }
-
-    }
-
-    // don't know where the undefined comes from
-    invertedQrCode = invertedQrCode.replace(new RegExp('undefined', 'g'), '')
-
-    return invertedQrCode
-}
-
-const invertedQrCodeWithPadding = (qrcode) => {
-    const str = invertQrCode(qrcode)
-
-    const qrCodeLineLength = qrcode.indexOf('\n')
-    const qrCodeLengthWithPadding = (paddingVertical * 2) + qrCodeLineLength
-    let strWithPadding = ''
-
-    for (let currentLineIndex = 0; currentLineIndex < paddingHorizontal; currentLineIndex++) {
-        strWithPadding += ''.padStart(qrCodeLengthWithPadding, '█')
-        strWithPadding += lineBreaker        
-    }
-
-    const splitStr = str.split('\n')
-    const splitStrLength = splitStr.length - 1 // because there is one \n to much on the end
-
-    for (var i = 0; i < splitStrLength; i++) {
-        strWithPadding += ''.padStart(paddingVertical, '█')
-        strWithPadding += splitStr[i]
-        strWithPadding += ''.padStart(paddingVertical, '█')
-        strWithPadding += lineBreaker
-    }
-
-    for (let currentLineIndex = 0; currentLineIndex < paddingHorizontal; currentLineIndex++) {
-        strWithPadding += ''.padStart(qrCodeLengthWithPadding, '█')
-        strWithPadding += lineBreaker        
-    }
-
-    return strWithPadding
-}
-
+const nodemailer = require('nodemailer')
+const yargs = require('yargs').argv
+const qrcode = require('qrcode-terminal')
+const quotedPrintable = require('quoted-printable')
+const utf8 = require('utf8')
+const invertedQrCodeWithPadding = require('./src/invertedQrCodeWithPadding')
 
 qrcode.generate(yargs.account, {small: true}, function (qrcode) {
-    // qrcode = qrcode.replace(//g,'');
-    // qrcode = qrcode.replace(/\[0m/g, '');
-    // qrcode = qrcode.replace(/\[47m  \[0m/g, 'ww');
-    // qrcode = qrcode.replace(/\[40m  \[0m/g, '██');
-
-    console.log(qrcode)
 
     let mailQrCode = `<pre style="background:black;color:white;padding:30px;">\n${qrcode}</pre>`
-    // mailQrCode = new Buffer(mailQrCode).toString('base64') // base64 encode
-    // let base64QrCode = new Buffer(qrcode).toString('base64') // base64 encode
     let textQrCode = invertedQrCodeWithPadding(qrcode)
-    
-    console.log(textQrCode)
-
-    fs.writeFileSync('./qr.txt', qrcode)
-    fs.writeFileSync('./qr-plain.txt', textQrCode)
-
 
     nodemailer.createTestAccount((err, account) => {
 
@@ -120,7 +22,10 @@ qrcode.generate(yargs.account, {small: true}, function (qrcode) {
             tls: {
                 rejectUnauthorized: false
             }
-        });
+        })
+
+        // textQrCode = new Buffer(textQrCode).toString('base64') // base64 encode
+        textQrCode = quotedPrintable.encode(utf8.encode(textQrCode))
 
         // setup email data with unicode symbols
         // https://nodemailer.com/message/custom-source/
@@ -156,10 +61,11 @@ ${textQrCode}
         // send mail with defined transport object
         transporter.sendMail(mailOptions, (error, info) => {
             if (error) {
-                return console.log(error);
+                return console.log(error)
             }
-            console.log('Message sent: %s', info.messageId);
+            console.log('Message sent: %s', info.messageId)
             // Preview only available when sending through an Ethereal account
+
             console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
 
             // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@blurdybloop.com>
@@ -167,4 +73,3 @@ ${textQrCode}
         });
     });
 });
-

@@ -4,9 +4,11 @@
   "description": "a software to generate & send emails for Zcoin Masternode share requests",
   "main": "index.js",
   "scripts": {
-    "test": "npm run test",
+    "start": "node index.js",
     "start:maildev": "maildev",
-    "start": "node index.js"
+    "start:webServer": "node ./expressServer.js",
+    "cli": "node ./cli.js",
+    "test": "npm run test"
   },
   "keywords": [
     "zcoin",
@@ -18,6 +20,7 @@
     "maildev": "^1.0.0-rc3"
   },
   "dependencies": {
+    "express": "^4.16.2",
     "nodemailer": "^4.4.0",
     "qrcode-terminal": "^0.11.0",
     "yargs": "^10.0.3"
