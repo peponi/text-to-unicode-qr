@@ -1,7 +1,7 @@
 {
-  "name": "znode-shares",
+  "name": "text-qr-email",
   "version": "1.0.0",
-  "description": "a software to generate & send emails for Zcoin Masternode share requests",
+  "description": "a tool set to generate qr codes based on unicde characters & and to request via web api or send via plain text email",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
@@ -11,8 +11,11 @@
     "test": "npm run test"
   },
   "keywords": [
-    "zcoin",
-    "masternode"
+    "qr",
+    "unicode",
+    "cli",
+    "express",
+    "api"
   ],
   "author": "pep0ni",
   "license": "GPL-3.0",

@@ -7,7 +7,7 @@ const quotedPrintable = require('quoted-printable')
 const utf8 = require('utf8')
 const invertedQrCodeWithPadding = require('./src/invertedQrCodeWithPadding')
 
-qrcode.generate(yargs.account, {small: true}, function (qrcode) {
+qrcode.generate(yargs.convertThis, {small: true}, function (qrcode) {
 
     let mailQrCode = `<pre style="background:black;color:white;padding:30px;">\n${qrcode}</pre>`
     let textQrCode = invertedQrCodeWithPadding(qrcode)
