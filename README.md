@@ -54,3 +54,7 @@ will save a inverted unicode qr in ```./wurstbrot.txt```
 ```
 node ./cli.js --convertThis=sadfsdfdfdsfghjre65zrtezht54e --inverted --file=wurstbrot
 ```
+
+## Todo
+
+* maybe https://research.swtch.com/qart
