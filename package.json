@@ -1,13 +1,16 @@
 {
-  "name": "text-qr-email",
+  "name": "text-to-unicode-qr",
   "version": "1.0.0",
-  "description": "a tool set to generate qr codes based on unicde characters & and to request via web api or send via plain text email",
+  "description": "convert text (BTC address) to QR codes made of unicode i.e. to send via text based emails",
   "main": "index.js",
+  "engines": {
+    "node": "8.4.0"
+  },
   "scripts": {
     "lint:js": "eslint .",
     "test:unit": "mocha ./tests --ui bdd --reporter nyan",
     "test:unit:watch": "npm run test:unit -- --watch",
-    "start": "node ./expressServer.js",
+    "start": "node ./index.js",
     "cli": "node ./cli.js",
     "test": "npm run test"
   },
@@ -29,5 +32,9 @@
     "express": "^4.16.2",
     "qrcode-terminal": "^0.11.0",
     "yargs": "^10.0.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/peponi/text-to-unicode-qr"
   }
 }

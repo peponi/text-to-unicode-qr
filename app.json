@@ -1,0 +1,15 @@
+{
+  "name": "text-to-unicode-qr",
+  "description": "convert text (BTC address) to QR codes made of unicode i.e. to send via text based emails",
+  "repository": "https://github.com/peponi/text-to-unicode-qr",
+  "logo": "https://orig00.deviantart.net/a22d/f/2012/275/3/6/qr_code_mario_by_moasysdaydream-d5gk4xl.png",
+  "keywords": [
+    "node", 
+    "express", 
+    "heroku","qr",
+    "unicode",
+    "cli",
+    "api"
+  ],
+  "image": "heroku/nodejs"
+}

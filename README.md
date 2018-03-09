@@ -2,6 +2,10 @@
 
 ## Usage Express WebServer
 
+```
+npm run start
+```
+
 #### request qr code via API
 
 ![screenshot of chrome brower which returned a unicode QR code for request on default api path](./assets/screenshot-browser.png)
