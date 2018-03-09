@@ -6,16 +6,98 @@
         <title></title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <style>
+            td {
+                border: 1px solid grey;
+            }
+
+            thead td {
+                font-weight: bold;
+            }
+
+            @media screen and (min-width: 500px) {            
+                table {
+                    max-width: 510px;
+                }
+
+                [type=text] {
+                    width: 505px;
+                }
+            }
+
+        </style>
     </head>
     <body>
         <form action="/" method="POST">
-            <input type="text" name="toConvert">
+            <input type="text" name="toConvert" placeholder="put your text here to convert">
             <input type="submit" value="convert">
         </form>
 
+        <br><br>
+
         <form action="/inverted" method="POST">
-            <input type="text" name="toConvert" placeholder="inverted qr">
+            <input type="text" name="toConvert" placeholder="inverted qr code with padding">
             <input type="submit" value="convert inverted">
         </form>
+        <br>
+        <hr>
+        <br>
+        <section>
+
+            <h3>API description</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <td>API</td>
+                        <td>description</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>/</td>
+                        <td>will return the index.html with input form to convert strings</td>
+                    </tr>
+                    <tr>
+                        <td>/VALUE</td>
+                        <td>will return the converted VALUE as qr</td>
+                    </tr>
+                    <tr>
+                        <td>/inverted/VALUE</td>
+                        <td>will return the inverted VALUE as qr</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        <section>
+            <h3>Example</h3>
+            <pre><code>
+$ curl https://text-to-unicode-qr.herokuapp.com/inverted/sadfsdfdfdsfghjre65zrtezht54e
+
+███████████████████████████████████████████████
+███████████████████████████████████████████████
+███████████████████████████████████████████████
+███████████████████████████████████████████████
+███████████████████████████████████████████████
+██████████▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀██████████
+██████████ █▀▀▀▀▀█ ▄ ▄ ▀▄█▄▄ █▀▀▀▀▀█ ██████████
+██████████ █ ███ █ ▄▄▄ ▄▄ █▀ █ ███ █ ██████████
+██████████ █ ▀▀▀ █ ▄█ ▀▄ █▄▀ █ ▀▀▀ █ ██████████
+██████████ ▀▀▀▀▀▀▀ ▀▄█ ▀ █ ▀ ▀▀▀▀▀▀▀ ██████████
+██████████ ▀████ ▀██▀▄▄▄██▀█▀ █ ▀ ▀  ██████████
+██████████ ▄ ▀   ▀▄▄ ▀  ▀ ▀ ▀█▄▀▀ ██ ██████████
+██████████ █ █▀▀▀▀ ██▀▄▄▀█ ▄█▀▄▀▀▀ ▀ ██████████
+██████████ █ ▀▄█▀▀▄█▄  ▀▀ █ ▄▀▄ ▀▀█▀ ██████████
+██████████ ▀ ▀▀  ▀▀▄██▄ ▀█▄█▀▀▀█▄▀▄▀ ██████████
+██████████ █▀▀▀▀▀█ ▀▀█ █ ▀ █ ▀ █ ▀██ ██████████
+██████████ █ ███ █ █▀▀█▀▀▀▀███▀█▀▀█▄ ██████████
+██████████ █ ▀▀▀ █ █▄▀▄█ █▄▄▄▄▀▄▀  █ ██████████
+██████████ ▀▀▀▀▀▀▀ ▀ ▀▀ ▀▀    ▀ ▀▀▀▀ ██████████
+███████████████████████████████████████████████
+███████████████████████████████████████████████
+███████████████████████████████████████████████
+███████████████████████████████████████████████
+███████████████████████████████████████████████
+            </code></pre>
+        </section>
     </body>
 </html>
