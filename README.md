@@ -1,25 +1,4 @@
-> I try to send emails with text based qr codes 'cause my friends only receive plain text mails,
-> but for everyone who could use this crap, I create CLI and web API &
-> will host this on HEROKU later (unit tests mssing)
-
-NOT FINISHED YET !!
-
-## Usage email
-
-#### QR code via plain text email
-
-![screenshot of an html email with text based QR code](./assets/screenshot-text.png)
-
-#### QR code via HTML email
-
-![screenshot of an html email with text based QR code](./assets/screenshot-html.png)
-
-start ```npm run start:maildev```
-
-send a mail with an Bitcoin address as QR code
-```node index.js --convertThis 113HP53P3Tcr3BNgj8WHujntdWm3ywCrWa```
-
-goto ```http://0.0.0.0:1080/#/```
+*I was tryng to [send emails with text based qr codes](./assets/screenshot-html.png) 'cause my friends only receive plain text mails, so I reated this small API to generate unicode based QRs*
 
 ## Usage Express WebServer
 
@@ -67,7 +46,3 @@ will save a inverted unicode qr in ```./wurstbrot.txt```
 ```
 node ./cli.js --convertThis=sadfsdfdfdsfghjre65zrtezht54e --inverted --file=wurstbrot
 ```
-
-## TODO
-
-* need to find out how to format the qr code for 'quoted-printable'

@@ -4,9 +4,10 @@
   "description": "a tool set to generate qr codes based on unicde characters & and to request via web api or send via plain text email",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "start:maildev": "maildev",
-    "start:webServer": "node ./expressServer.js",
+    "lint:js": "eslint .",
+    "test:unit": "mocha ./tests --ui bdd --reporter nyan",
+    "test:unit:watch": "npm run test:unit -- --watch",
+    "start": "node ./expressServer.js",
     "cli": "node ./cli.js",
     "test": "npm run test"
   },
@@ -20,11 +21,12 @@
   "author": "pep0ni",
   "license": "GPL-3.0",
   "devDependencies": {
-    "maildev": "^1.0.0-rc3"
+    "chai": "^4.1.2",
+    "eslint": "^4.18.2",
+    "mocha": "^5.0.2"
   },
   "dependencies": {
     "express": "^4.16.2",
-    "nodemailer": "^4.4.0",
     "qrcode-terminal": "^0.11.0",
     "yargs": "^10.0.3"
   }
