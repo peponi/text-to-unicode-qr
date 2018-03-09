@@ -1,5 +1,9 @@
 *I was tryng to [send emails with text based qr codes](./assets/screenshot-html.png) 'cause my friends only receive plain text mails, so I generated this small API to generate unicode based QRs*
 
+demo on https://text-to-unicode-qr.herokuapp.com/
+
+this ```curl -GET https://text-to-unicode-qr.herokuapp.com/inverted/sadfsdfdfdsfghjre65zrtezht54e``` will work
+
 ## Usage Express WebServer
 
 ```

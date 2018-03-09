@@ -37,7 +37,7 @@ app.get('/:toConvert', function (req, res) {
   qrcode.generate(req.params.toConvert, {small: true}, function (qrcode) {
     const qr = qrcode
     res.set('Content-Type', 'text/html');
-    res.send(new Buffer(`<pre style="background:black;color:white;padding:30px;">\n${qr}</pre>`));
+    res.send(new Buffer(qr));
   })
 })
 
@@ -45,7 +45,7 @@ app.get('/inverted/:toConvert', function (req, res) {
   qrcode.generate(req.params.toConvert, {small: true}, function (qrcode) {
     const qr = invertedQrCodeWithPadding(qrcode)
     res.set('Content-Type', 'text/html');
-    res.send(new Buffer(`<pre>\n${qr}</pre>`));
+    res.send(new Buffer(qr));
   })
 })
 
