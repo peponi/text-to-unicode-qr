@@ -1,4 +1,4 @@
-*I was tryng to [send emails with text based qr codes](./assets/screenshot-html.png) 'cause my friends only receive plain text mails, so I reated this small API to generate unicode based QRs*
+*I was tryng to [send emails with text based qr codes](./assets/screenshot-html.png) 'cause my friends only receive plain text mails, so I generated this small API to generate unicode based QRs*
 
 ## Usage Express WebServer
 
